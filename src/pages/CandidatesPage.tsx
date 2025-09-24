@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { type Candidate } from '../db/db';
 import { Link } from 'react-router-dom';
 import './CandidatesPage.css';

@@ -62,11 +62,12 @@ export function SkeletonText({ lines = 3, className = '' }: SkeletonTextProps) {
 
 interface SkeletonCardProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function SkeletonCard({ className = '' }: SkeletonCardProps) {
+export function SkeletonCard({ className = '', style }: SkeletonCardProps) {
   return (
-    <div className={`card p-6 ${className}`}>
+    <div className={`card p-6 ${className}`} style={style}>
       <div className="flex items-center gap-4 mb-4">
         <Skeleton variant="circular" width={40} height={40} />
         <div className="flex-1">

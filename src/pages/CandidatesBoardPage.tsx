@@ -167,7 +167,7 @@ export function CandidatesBoardPage() {
     }
 
     const candidateId = Number(active.id);
-    const candidateToMove = candidates[activeContainer]?.find(c => c.id === candidateId);
+    const candidateToMove = activeContainer ? candidates[activeContainer]?.find((c: Candidate) => c.id === candidateId) : null;
 
     console.log('Candidate to move:', candidateToMove);
 
@@ -183,13 +183,17 @@ export function CandidatesBoardPage() {
       const newCandidates = { ...prev };
       
       // Remove from source
-      newCandidates[activeContainer] = newCandidates[activeContainer].filter(c => c.id !== candidateId);
+      if (activeContainer) {
+        newCandidates[activeContainer] = newCandidates[activeContainer].filter((c: Candidate) => c.id !== candidateId);
+      }
       
       // Add to target
-      newCandidates[overContainer] = [...newCandidates[overContainer], { 
-        ...candidateToMove, 
-        stage: overContainer 
-      }];
+      if (overContainer) {
+        newCandidates[overContainer] = [...newCandidates[overContainer], { 
+          ...candidateToMove, 
+          stage: overContainer 
+        }];
+      }
       
       console.log('✅ State updated:', newCandidates);
       return newCandidates;

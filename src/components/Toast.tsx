@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 
-export interface ToastProps {
+export interface ToastData {
   id: string;
   type: 'success' | 'error' | 'warning' | 'info';
   title: string;
   message?: string;
   duration?: number;
+}
+
+export interface ToastProps extends ToastData {
   onClose: (id: string) => void;
 }
 
@@ -61,7 +64,7 @@ export function Toast({ id, type, title, message, duration = 5000, onClose }: To
 }
 
 export interface ToastContainerProps {
-  toasts: ToastProps[];
+  toasts: ToastData[];
   onClose: (id: string) => void;
 }
 

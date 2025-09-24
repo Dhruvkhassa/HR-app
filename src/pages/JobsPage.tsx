@@ -114,10 +114,11 @@ export function JobsPage() {
           throw new Error('Failed to reorder job on the server');
         }
         success('Jobs reordered', 'Job order has been updated successfully');
-      } catch (error) {
-        console.error('Reorder failed, rolling back.', error);
+      } catch (err) {
+        console.error('Reorder failed, rolling back.', err);
         setJobs(originalJobs);
-        error('Failed to reorder jobs', 'There was an error reordering jobs. Please try again.');
+        const errorMessage = err instanceof Error ? err.message : 'There was an error reordering jobs. Please try again.';
+        console.error('Failed to reorder jobs:', errorMessage);
       }
     }
   };

@@ -1,0 +1,127 @@
+.candidate-notes {
+  margin-top: var(--space-6);
+  padding: var(--space-6);
+  background: var(--dark-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--dark-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.candidate-notes h3 {
+  margin: 0 0 var(--space-4);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-text-primary);
+}
+
+.notes-container {
+  position: relative;
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all var(--transition-normal);
+}
+
+.notes-textarea:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px rgb(14 165 233 / 0.1);
+}
+
+.notes-textarea::placeholder {
+  color: var(--dark-text-tertiary);
+}
+
+.mention-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--dark-bg-primary);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.mention-suggestion {
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  color: var(--dark-text-primary);
+  border-bottom: 1px solid var(--dark-border);
+  transition: background-color var(--transition-normal);
+}
+
+.mention-suggestion:hover {
+  background: var(--primary-500);
+  color: white;
+}
+
+.mention-suggestion:last-child {
+  border-bottom: none;
+}
+
+.notes-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-4);
+}
+
+.save-notes-btn {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.save-notes-btn:hover {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.notes-info {
+  font-size: var(--font-size-xs);
+  color: var(--dark-text-tertiary);
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidate-notes {
+    padding: var(--space-4);
+  }
+  
+  .notes-actions {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+  
+  .save-notes-btn {
+    width: 100%;
+  }
+  
+  .notes-info {
+    text-align: center;
+  }
+}

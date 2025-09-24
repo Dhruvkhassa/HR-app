@@ -1,0 +1,101 @@
+/* src/components/QuestionRenderer.css */
+.question-render-card {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #3f3f3f;
+}
+
+.prompt-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.option input {
+  margin: 0;
+}
+
+.text-input,
+.text-area {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #eee;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.text-area {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Numeric Input Styles */
+.numeric-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.numeric-input {
+  width: 200px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #eee;
+  font-size: 1rem;
+}
+
+.numeric-range-info {
+  font-size: 0.8rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* File Upload Styles */
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.file-input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.file-upload-info {
+  font-size: 0.8rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Validation Indicators */
+.required-indicator {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.max-length-indicator {
+  color: #aaa;
+  font-size: 0.8rem;
+  font-weight: normal;
+}

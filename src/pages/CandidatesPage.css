@@ -1,0 +1,648 @@
+.candidates-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+  padding: var(--space-8) var(--space-4);
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  padding: var(--space-6);
+  background: var(--dark-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--dark-border);
+  box-shadow: var(--shadow-md);
+}
+
+.page-nav .nav-link {
+  color: var(--dark-text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--dark-bg-tertiary);
+  border: 1px solid var(--dark-border);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.page-nav .nav-link:hover {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.candidates-page h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--dark-text-primary);
+  margin-bottom: var(--space-2);
+  text-align: center;
+}
+
+.candidates-page p {
+  color: var(--dark-text-secondary);
+  text-align: center;
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-8);
+}
+
+/* Enhanced Filter Controls */
+.filter-controls {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Simplified search input - no wrapper needed */
+
+/* Removed search icon styling for simplified search */
+
+.filter-input {
+  width: 300px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-bg-secondary);
+  color: var(--dark-text-primary);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-normal);
+}
+
+.filter-select {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-bg-secondary);
+  color: var(--dark-text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-normal);
+  box-shadow: none;
+  width: 100%;
+  height: 48px;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px rgb(14 165 233 / 0.1);
+  background-color: var(--dark-bg-primary);
+}
+
+.filter-textarea {
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-12);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-bg-secondary);
+  color: var(--dark-text-primary);
+  font-size: var(--font-size-lg);
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 80px;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-textarea:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgb(14 165 233 / 0.1), var(--shadow-md);
+  background-color: var(--dark-bg-primary);
+}
+
+.filter-textarea::placeholder {
+  font-size: var(--font-size-lg);
+  color: var(--dark-text-tertiary);
+}
+
+.filter-select {
+  padding: var(--space-3) var(--space-5);
+  min-width: 150px;
+  cursor: pointer;
+}
+
+/* Removed clear-search styling for simplified search */
+
+
+/* Candidates List Container */
+.candidates-list-container {
+  height: 70vh;
+  min-height: 400px;
+  overflow: auto;
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-xl);
+  background: var(--dark-bg-secondary);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.candidates-list-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.candidates-list {
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--dark-border);
+  background: var(--dark-bg-secondary);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  min-height: 60px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+}
+
+.list-item:hover {
+  background: var(--dark-bg-primary);
+  border-left: 4px solid var(--primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.list-item-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.candidate-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.item-name {
+  font-weight: 600;
+  color: var(--dark-text-primary);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.item-email {
+  font-size: var(--font-size-sm);
+  color: var(--dark-text-secondary);
+  margin: 0;
+}
+
+.item-stage {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.item-stage::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.item-stage.applied::before { content: '📝'; }
+.item-stage.screen::before { content: '📞'; }
+.item-stage.tech::before { content: '💻'; }
+.item-stage.offer::before { content: '💰'; }
+.item-stage.hired::before { content: '🎉'; }
+.item-stage.rejected::before { content: '❌'; }
+
+/* Stage-specific colors */
+.stage-applied { background: linear-gradient(135deg, var(--warning-500), var(--warning-600)); }
+.stage-screen { background: linear-gradient(135deg, var(--primary-500), var(--primary-600)); }
+.stage-tech { background: linear-gradient(135deg, var(--secondary-500), var(--secondary-600)); }
+.stage-offer { background: linear-gradient(135deg, var(--success-500), var(--success-600)); }
+.stage-hired { background: linear-gradient(135deg, var(--success-600), var(--success-700)); }
+.stage-rejected { background: linear-gradient(135deg, var(--error-500), var(--error-600)); }
+
+.loading-overlay {
+    display: flex;
+  flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  gap: var(--space-4);
+  color: var(--dark-text-secondary);
+}
+
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--dark-text-secondary);
+}
+
+.empty-state p {
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--dark-border);
+  border-top: 3px solid var(--primary-500);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Kanban Board Styles */
+.kanban-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+  padding: var(--space-8) var(--space-4);
+}
+
+.kanban-header {
+  max-width: 1400px;
+  margin: 0 auto var(--space-8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6);
+  background: var(--dark-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--dark-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.kanban-nav .nav-link {
+  color: var(--dark-text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--dark-bg-tertiary);
+  border: 1px solid var(--dark-border);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.kanban-nav .nav-link:hover {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kanban-title-section h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--dark-text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.kanban-title-section p {
+  color: var(--dark-text-secondary);
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.kanban-stats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.kanban-stats .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background: var(--dark-bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--dark-border);
+}
+
+.kanban-stats .stat-number {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--primary-500);
+}
+
+.kanban-stats .stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--dark-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kanban-board {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+}
+
+.kanban-column {
+  background: var(--dark-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--dark-border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.kanban-column:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.kanban-column::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+}
+
+.column-title {
+  padding: var(--space-5) var(--space-6);
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--dark-text-primary);
+  background: var(--dark-bg-tertiary);
+  border-bottom: 1px solid var(--dark-border);
+  text-transform: capitalize;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stage-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stage-emoji {
+  font-size: var(--font-size-xl);
+}
+
+.candidate-count {
+  background: var(--stage-color, var(--primary-500));
+  color: white;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+.empty-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--dark-text-tertiary);
+  font-style: italic;
+}
+
+.kanban-column.drag-over {
+  border-color: var(--primary-500);
+  background: var(--dark-bg-secondary);
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+.candidate-card {
+  background: var(--dark-bg-primary);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  cursor: grab;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.candidate-card:hover {
+  background: var(--dark-bg-secondary);
+  border-color: var(--primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.candidate-card:active {
+  cursor: grabbing;
+}
+
+.candidate-card h4 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--dark-text-primary);
+}
+
+.candidate-card p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--dark-text-secondary);
+}
+
+.drag-overlay-card {
+  transform: rotate(5deg);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Pagination Styles */
+.pagination-container {
+  max-width: 1200px;
+  margin: var(--space-8) auto 0;
+  padding: 0 var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination-info {
+  color: var(--dark-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pagination-btn {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--dark-border);
+  background: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0 var(--space-4);
+}
+
+.pagination-page {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--dark-border);
+  background: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-width: 40px;
+  text-align: center;
+}
+
+.pagination-page:hover {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+}
+
+.pagination-page.active {
+  background: var(--primary-500);
+  color: white;
+  border-color: var(--primary-500);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidates-page {
+    padding: var(--space-4);
+  }
+  
+  .page-nav {
+    flex-direction: column;
+    gap: var(--space-3);
+    text-align: center;
+  }
+  
+  .page-nav .nav-link {
+    width: 100%;
+    justify-content: center;
+  }
+  
+.filter-controls {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .filter-input {
+    width: 250px;
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .filter-textarea {
+    font-size: var(--font-size-base);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10);
+    min-height: 70px;
+  }
+  
+  .list-item {
+    padding: 0 var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    height: auto;
+    min-height: 55px;
+  }
+  
+  .item-stage {
+    align-self: flex-end;
+  }
+  
+  /* Kanban responsive */
+  .kanban-header {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  
+  .kanban-board {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .kanban-stats {
+    justify-content: center;
+  }
+  
+  .pagination-container {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  
+  .pagination-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .pagination-pages {
+    margin: 0 var(--space-2);
+  }
+}

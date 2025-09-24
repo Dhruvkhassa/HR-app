@@ -1,0 +1,125 @@
+/* src/pages/CandidateDetailPage.css */
+
+.candidate-detail-page {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--dark-bg-primary);
+  min-height: 100vh;
+}
+
+.candidate-nav {
+  margin-bottom: 2rem;
+}
+
+.candidate-nav .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-md);
+  color: var(--dark-text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-normal);
+}
+
+.candidate-nav .nav-link:hover {
+  background: var(--dark-bg-tertiary);
+  border-color: var(--primary-500);
+  transform: translateY(-1px);
+}
+
+.nav-icon {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+.candidate-header {
+  margin-bottom: 3rem;
+}
+
+.candidate-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-text-primary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.candidate-email {
+  font-size: var(--font-size-lg);
+  color: var(--dark-text-secondary);
+  margin: 0 0 0.5rem 0;
+  font-weight: 400;
+}
+
+.candidate-stage {
+  font-size: var(--font-size-base);
+  color: var(--dark-text-primary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.timeline-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-text-primary);
+  margin: 0 0 1.5rem 0;
+}
+
+.timeline-list {
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.timeline-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-event {
+  font-size: var(--font-size-base);
+  color: var(--dark-text-primary);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-date {
+  font-size: var(--font-size-sm);
+  color: var(--dark-text-tertiary);
+  font-weight: 400;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .candidate-detail-page {
+    padding: 1rem;
+  }
+  
+  .candidate-name {
+    font-size: 2rem;
+  }
+  
+  .candidate-email {
+    font-size: var(--font-size-base);
+  }
+  
+  .timeline-list {
+    padding: 1rem;
+  }
+}

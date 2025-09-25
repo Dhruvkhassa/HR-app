@@ -92,19 +92,16 @@ export function CandidatesBoardPage() {
     async function fetchCandidates() {
       try {
         console.log('Fetching candidates for board...');
-        const response = await fetch('/api/candidates?board=true');
-        const responseData = await response.json();
-        const data: Candidate[] = responseData.data || responseData || []; // Handle both API and direct array responses
+        const response = await fetch('/candidates?board=true');
+        const data: Candidate[] = await response.json();
         console.log('Fetched candidates:', data.length, 'candidates');
         
         const grouped = STAGES.reduce((acc, stage) => ({ ...acc, [stage]: [] }), {} as Record<string, Candidate[]>);
-        if (Array.isArray(data)) {
-          data.forEach(c => {
-            if (grouped[c.stage]) {
-              grouped[c.stage].push(c);
-            }
-          });
-        }
+        data.forEach(c => {
+          if (grouped[c.stage]) {
+            grouped[c.stage].push(c);
+          }
+        });
         console.log('Grouped candidates:', grouped);
         setCandidates(grouped);
       } catch (error) {
@@ -204,7 +201,7 @@ export function CandidatesBoardPage() {
 
     // Update server
     try {
-      const response = await fetch(`/api/candidates/${candidateId}`, {
+      const response = await fetch(`/candidates/${candidateId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stage: overContainer }),

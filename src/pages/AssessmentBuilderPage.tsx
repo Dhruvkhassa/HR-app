@@ -27,8 +27,8 @@ export function AssessmentBuilderPage() {
     async function loadData() {
       try {
         const [jobRes, assessmentRes] = await Promise.all([
-          fetch(`/api/jobs/${jobId}`),
-          fetch(`/api/assessments/${jobId}`),
+          fetch(`/jobs/${jobId}`),
+          fetch(`/assessments/${jobId}`),
         ]);
 
         if (!jobRes.ok) throw new Error('Job not found');
@@ -51,7 +51,7 @@ export function AssessmentBuilderPage() {
   const handleSaveAssessment = async () => {
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/assessments/${jobId}`, {
+      const response = await fetch(`/assessments/${jobId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questions }),

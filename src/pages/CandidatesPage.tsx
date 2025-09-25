@@ -30,17 +30,15 @@ export function CandidatesPage() {
       params.append('page', currentPage.toString());
       params.append('pageSize', pageSize.toString());
       const query = params.toString();
-      const url = query ? `/api/candidates?${query}` : '/api/candidates';
+      const url = query ? `/candidates?${query}` : '/candidates';
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch candidates');
         const data = await response.json();
-        setCandidates(data.data || []);
-        setPagination(data.pagination || { total: 0, totalPages: 0, hasNext: false, hasPrev: false });
+        setCandidates(data.data);
+        setPagination(data.pagination);
       } catch (error) {
         console.error('Error fetching candidates:', error);
-        setCandidates([]);
-        setPagination({ total: 0, totalPages: 0, hasNext: false, hasPrev: false });
       } finally {
         setLoading(false);
       }

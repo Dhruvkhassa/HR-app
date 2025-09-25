@@ -13,17 +13,8 @@ export default defineConfig({
           forms: ['react-hook-form', '@hookform/resolvers', 'zod'],
           database: ['dexie', 'dexie-react-hooks'],
           ui: ['@dnd-kit/core', '@dnd-kit/sortable']
-        },
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        }
       }
-    }
-  },
-  server: {
-    // Exclude API directory from being served as static files in development
-    fs: {
-      deny: ['api']
     }
   }
 })

@@ -20,8 +20,8 @@ export function AssessmentTakePage() {
     async function loadAssessment() {
       try {
         const [jobRes, assessmentRes] = await Promise.all([
-          fetch(`/api/jobs/${jobId}`),
-          fetch(`/api/assessments/${jobId}`),
+          fetch(`/jobs/${jobId}`),
+          fetch(`/assessments/${jobId}`),
         ]);
 
         if (!jobRes.ok) throw new Error('Job not found');
@@ -54,7 +54,7 @@ export function AssessmentTakePage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(`/api/assessments/${jobId}/submit`, {
+      const response = await fetch(`/assessments/${jobId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers }),

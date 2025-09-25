@@ -36,17 +36,14 @@ export function JobsPage() {
     params.append('page', currentPage.toString());
     params.append('pageSize', pageSize.toString());
     const query = params.toString();
-    const url = query ? `/api/jobs?${query}` : '/api/jobs';
+    const url = query ? `/jobs?${query}` : '/jobs';
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error('Failed to fetch jobs');
       const data = await response.json();
-      setJobs(data.data || []);
-      setPagination(data.pagination || { total: 0, totalPages: 0, hasNext: false, hasPrev: false });
+      setJobs(data.data);
+      setPagination(data.pagination);
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
-      setJobs([]);
-      setPagination({ total: 0, totalPages: 0, hasNext: false, hasPrev: false });
     } finally {
       setLoading(false);
     }
@@ -74,7 +71,7 @@ export function JobsPage() {
     
     try {
       console.log('Making PATCH request to:', `/jobs/${job.id}`);
-      const response = await fetch(`/api/jobs/${job.id}`, {
+      const response = await fetch(`/jobs/${job.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -110,7 +107,7 @@ export function JobsPage() {
         return arrayMove(currentJobs, oldIndex, newIndex);
       });
       try {
-        const response = await fetch(`/api/jobs/${active.id}/reorder`, {
+        const response = await fetch(`/jobs/${active.id}/reorder`, {
           method: 'PATCH',
         });
         if (!response.ok) {

@@ -10,7 +10,7 @@ export function JobDetailPage() {
   useEffect(() => {
     async function fetchJob() {
       try {
-        const response = await fetch(`/api/jobs/${jobId}`);
+        const response = await fetch(`/jobs/${jobId}`);
         if (!response.ok) throw new Error('Job not found');
         const data = await response.json();
         setJob(data);

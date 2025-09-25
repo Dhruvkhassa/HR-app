@@ -36,9 +36,10 @@ export function JobsPage() {
     params.append('page', currentPage.toString());
     params.append('pageSize', pageSize.toString());
     const query = params.toString();
-    const url = query ? `/jobs?${query}` : '/jobs';
+    const url = query ? `/api/jobs?${query}` : '/api/jobs';
     try {
       const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch jobs');
       const data = await response.json();
       setJobs(data.data);
       setPagination(data.pagination);

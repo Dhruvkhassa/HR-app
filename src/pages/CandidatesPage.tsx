@@ -30,7 +30,7 @@ export function CandidatesPage() {
       params.append('page', currentPage.toString());
       params.append('pageSize', pageSize.toString());
       const query = params.toString();
-      const url = query ? `/candidates?${query}` : '/candidates';
+      const url = query ? `/api/candidates?${query}` : '/api/candidates';
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch candidates');

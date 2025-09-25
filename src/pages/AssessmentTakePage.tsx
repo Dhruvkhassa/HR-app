@@ -20,8 +20,8 @@ export function AssessmentTakePage() {
     async function loadAssessment() {
       try {
         const [jobRes, assessmentRes] = await Promise.all([
-          fetch(`/jobs/${jobId}`),
-          fetch(`/assessments/${jobId}`),
+          fetch(`/api/jobs/${jobId}`),
+          fetch(`/api/assessments/${jobId}`),
         ]);
 
         if (!jobRes.ok) throw new Error('Job not found');

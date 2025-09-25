@@ -3,6 +3,134 @@ import { db } from '../db/db';
 import { type Candidate, type Job } from '../db/db';
 
 export const handlers = [
+  // --- API ROUTES (for development compatibility) ---
+  http.get('/api/jobs', async ({ request }) => {
+    try {
+      const url = new URL(request.url);
+      const search = url.searchParams.get('search');
+      const status = url.searchParams.get('status');
+      const page = parseInt(url.searchParams.get('page') || '1');
+      const pageSize = parseInt(url.searchParams.get('pageSize') || '10');
+      const sort = url.searchParams.get('sort') || 'order';
+      
+      let query = db.jobs.toCollection();
+      if (status) {
+        query = query.filter((job) => job.status === status);
+      }
+      if (search) {
+        const searchLower = search.toLowerCase();
+        query = query.filter((job) =>
+          job.title.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      const allJobs = await query.sortBy(sort);
+      const total = allJobs.length;
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const jobs = allJobs.slice(startIndex, endIndex);
+      
+      return HttpResponse.json({
+        data: jobs,
+        pagination: {
+          page,
+          pageSize,
+          total,
+          totalPages: Math.ceil(total / pageSize),
+          hasNext: endIndex < total,
+          hasPrev: page > 1
+        }
+      });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error fetching jobs' }, { status: 500 });
+    }
+  }),
+  http.get('/api/jobs/:id', async ({ params }) => {
+    try {
+      const { id } = params;
+      const job = await db.jobs.get(Number(id));
+      if (job) {
+        return HttpResponse.json(job);
+      }
+      return new HttpResponse(null, { status: 404, statusText: 'Not Found' });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error fetching job' }, { status: 500 });
+    }
+  }),
+  http.get('/api/candidates', async ({ request }) => {
+    try {
+      const url = new URL(request.url);
+      const stage = url.searchParams.get('stage');
+      const page = parseInt(url.searchParams.get('page') || '1');
+      const pageSize = parseInt(url.searchParams.get('pageSize') || '20');
+      const search = url.searchParams.get('search');
+      const boardView = url.searchParams.get('board') === 'true';
+      
+      let allCandidates = await db.candidates.toArray();
+      
+      // Apply stage filter
+      if (stage) {
+        allCandidates = allCandidates.filter(c => c.stage === stage);
+      }
+      
+      // Apply search filter
+      if (search) {
+        const searchLower = search.toLowerCase();
+        allCandidates = allCandidates.filter(c => 
+          c.name.toLowerCase().includes(searchLower) || 
+          c.email.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      // For board view, return all candidates without pagination
+      if (boardView) {
+        return HttpResponse.json({
+          data: allCandidates,
+          pagination: {
+            page: 1,
+            pageSize: allCandidates.length,
+            total: allCandidates.length,
+            totalPages: 1,
+            hasNext: false,
+            hasPrev: false
+          }
+        });
+      }
+      
+      const total = allCandidates.length;
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const candidates = allCandidates.slice(startIndex, endIndex);
+      
+      return HttpResponse.json({
+        data: candidates,
+        pagination: {
+          page,
+          pageSize,
+          total,
+          totalPages: Math.ceil(total / pageSize),
+          hasNext: endIndex < total,
+          hasPrev: page > 1
+        }
+      });
+    } catch (error) {
+      console.error('[MSW] Error fetching candidates:', error);
+      return HttpResponse.json({ message: 'Error fetching candidates' }, { status: 500 });
+    }
+  }),
+  http.get('/api/assessments/:jobId', async ({ params }) => {
+    const jobId = Number(params.jobId);
+    try {
+      const assessment = await db.assessments.where({ jobId }).first();
+      if (assessment) {
+        return HttpResponse.json(assessment);
+      }
+      return new HttpResponse(null, { status: 404 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error fetching assessment' }, { status: 500 });
+    }
+  }),
+
   // --- JOB HANDLERS ---
   http.get('/jobs', async ({ request }) => {
     try {

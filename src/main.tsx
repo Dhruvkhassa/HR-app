@@ -12,18 +12,16 @@ async function enableMocking() {
     return;
   }
 
-  const { worker } = await import('./mocks/browser.ts');
-
-  // `onunhandledrejection` is a good place to listen for errors from the worker.
-  // It helps in debugging when a request is not handled by any of your handlers.
-  return worker.start({
-    onUnhandledRequest: 'bypass',
-  });
+  // Worker is already started in browser.ts, just import it
+  await import('./mocks/browser.ts');
 }
 
 // Enable mocking, then seed the database, then render the app.
 enableMocking().then(async () => {
-  await seedDatabase();
+  // Only seed database in development mode
+  if (import.meta.env.MODE === 'development') {
+    await seedDatabase();
+  }
 
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

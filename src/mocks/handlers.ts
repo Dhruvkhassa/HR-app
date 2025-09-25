@@ -130,6 +130,117 @@ export const handlers = [
       return HttpResponse.json({ message: 'Error fetching assessment' }, { status: 500 });
     }
   }),
+  http.put('/api/assessments/:jobId', async ({ request, params }) => {
+    const jobId = Number(params.jobId);
+    try {
+      const { questions } = await request.json() as { questions: any[] };
+      await db.assessments.put({
+        jobId,
+        questions,
+      });
+      const newAssessment = await db.assessments.where({ jobId }).first();
+      return HttpResponse.json(newAssessment, { status: 200 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error saving assessment' }, { status: 500 });
+    }
+  }),
+  http.post('/api/assessments/:jobId/submit', async ({ request, params }) => {
+    const jobId = Number(params.jobId);
+    try {
+      const { answers } = await request.json() as { answers: Record<string, any> };
+      
+      // Save the assessment response to the database
+      await db.assessmentResponses.add({
+        jobId,
+        answers,
+        submittedAt: new Date(),
+      });
+      
+      return HttpResponse.json({ 
+        message: 'Assessment submitted successfully',
+        submissionId: Date.now() // Simple ID generation
+      }, { status: 200 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error submitting assessment' }, { status: 500 });
+    }
+  }),
+  http.get('/api/candidates/:id', async ({ params }) => {
+    try {
+      const { id } = params;
+      const candidate = await db.candidates.get(Number(id));
+      if (candidate) {
+        return HttpResponse.json(candidate);
+      }
+      return new HttpResponse(null, { status: 404 });
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error fetching candidate' }, { status: 500 });
+    }
+  }),
+  http.get('/api/candidates/:id/timeline', async () => {
+    const mockTimeline = [
+      { event: 'Applied for role', date: '2025-09-20' },
+      { event: 'Moved to Screen stage', date: '2025-09-21' },
+      { event: 'Moved to Tech stage', date: '2025-09-23' },
+    ];
+    return HttpResponse.json(mockTimeline);
+  }),
+  http.patch('/api/candidates/:id', async ({ request, params }) => {
+    try {
+      const { id } = params;
+      const updates = await request.json() as { stage?: Candidate['stage']; notes?: string };
+      if (updates.stage) {
+        await db.candidates.update(Number(id), { stage: updates.stage });
+      }
+      if (updates.notes !== undefined) {
+        await db.candidates.update(Number(id), { notes: updates.notes });
+      }
+      const updatedCandidate = await db.candidates.get(Number(id));
+      return HttpResponse.json(updatedCandidate);
+    } catch (error) {
+      return HttpResponse.json({ message: 'Error updating candidate' }, { status: 500 });
+    }
+  }),
+  http.patch('/api/jobs/:id', async ({ request, params }) => {
+    try {
+      const { id } = params;
+      const updates = (await request.json()) as Partial<Job>;
+      console.log('[MSW] PATCH /api/jobs/:id - Job ID:', id, 'Updates:', updates);
+      
+      const jobId = Number(id);
+      
+      // Debug: List all existing jobs
+      const allJobs = await db.jobs.toArray();
+      console.log('[MSW] All existing jobs:', allJobs.map(j => ({ id: j.id, title: j.title })));
+      
+      const jobExists = await db.jobs.get(jobId);
+      console.log('[MSW] Job exists before update:', jobExists);
+      
+      if (!jobExists) {
+        console.log('[MSW] Job not found, returning 404');
+        return new HttpResponse(null, { status: 404, statusText: 'Job not found' });
+      }
+      
+      await db.jobs.update(jobId, updates);
+      const updatedJob = await db.jobs.get(jobId);
+      console.log('[MSW] Updated job:', updatedJob);
+      
+      return HttpResponse.json(updatedJob);
+    } catch (error) {
+      console.error('[MSW] Error updating job:', error);
+      return HttpResponse.json({ message: 'Error updating job' }, { status: 500 });
+    }
+  }),
+  http.patch('/api/jobs/:id/reorder', async () => {
+    if (Math.random() < 0.3) {
+      console.error('[MSW] Simulating 500 Internal Server Error for reorder');
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error',
+      });
+    }
+    console.log('[MSW] Job reorder successful');
+    return HttpResponse.json({ success: true });
+  }),
 
   // --- JOB HANDLERS ---
   http.get('/jobs', async ({ request }) => {

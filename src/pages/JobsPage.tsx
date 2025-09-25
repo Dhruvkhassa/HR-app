@@ -72,7 +72,7 @@ export function JobsPage() {
     
     try {
       console.log('Making PATCH request to:', `/jobs/${job.id}`);
-      const response = await fetch(`/jobs/${job.id}`, {
+      const response = await fetch(`/api/jobs/${job.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -108,7 +108,7 @@ export function JobsPage() {
         return arrayMove(currentJobs, oldIndex, newIndex);
       });
       try {
-        const response = await fetch(`/jobs/${active.id}/reorder`, {
+        const response = await fetch(`/api/jobs/${active.id}/reorder`, {
           method: 'PATCH',
         });
         if (!response.ok) {

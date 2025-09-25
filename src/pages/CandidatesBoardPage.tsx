@@ -202,7 +202,7 @@ export function CandidatesBoardPage() {
 
     // Update server
     try {
-      const response = await fetch(`/candidates/${candidateId}`, {
+      const response = await fetch(`/api/candidates/${candidateId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stage: overContainer }),

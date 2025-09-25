@@ -21,8 +21,8 @@ export function CandidateDetailPage() {
       try {
         // Fetch both candidate details and timeline concurrently
         const [candidateRes, timelineRes] = await Promise.all([
-          fetch(`/candidates/${id}`),
-          fetch(`/candidates/${id}/timeline`),
+          fetch(`/api/candidates/${id}`),
+          fetch(`/api/candidates/${id}/timeline`),
         ]);
         if (!candidateRes.ok) throw new Error('Candidate not found');
 
@@ -42,7 +42,7 @@ export function CandidateDetailPage() {
 
   const handleUpdateNotes = async (candidateId: number, notes: string) => {
     try {
-      const response = await fetch(`/candidates/${candidateId}`, {
+      const response = await fetch(`/api/candidates/${candidateId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ notes }),

@@ -54,7 +54,7 @@ export function AssessmentTakePage() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(`/assessments/${jobId}/submit`, {
+      const response = await fetch(`/api/assessments/${jobId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers }),

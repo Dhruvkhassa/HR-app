@@ -1,15 +1,9 @@
 {
   "functions": {
-    "api/jobs.ts": {
+    "api/jobs.js": {
       "maxDuration": 10
     },
-    "api/jobs/[id].ts": {
-      "maxDuration": 10
-    },
-    "api/candidates.ts": {
-      "maxDuration": 10
-    },
-    "api/assessments/[jobId].ts": {
+    "api/candidates.js": {
       "maxDuration": 10
     }
   },

@@ -76,7 +76,7 @@ Start the development server**
 
 4. **
 Open your browser**
- Visit `https://hr-app-lkpc-jw9xdg62e-dhruvkhassas-projects.vercel.app/` to view the application
+ Visit `https://hr-app-zrpu-66x2wrkoz-dhruvkhassas-projects.vercel.app/` to view the application
 
 ## 🚀 Available Scripts
 

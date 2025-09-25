@@ -41,10 +41,12 @@ export function JobsPage() {
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch jobs');
       const data = await response.json();
-      setJobs(data.data);
-      setPagination(data.pagination);
+      setJobs(data.data || []);
+      setPagination(data.pagination || { total: 0, totalPages: 0, hasNext: false, hasPrev: false });
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
+      setJobs([]);
+      setPagination({ total: 0, totalPages: 0, hasNext: false, hasPrev: false });
     } finally {
       setLoading(false);
     }

@@ -94,15 +94,17 @@ export function CandidatesBoardPage() {
         console.log('Fetching candidates for board...');
         const response = await fetch('/api/candidates?board=true');
         const responseData = await response.json();
-        const data: Candidate[] = responseData.data || responseData; // Handle both API and direct array responses
+        const data: Candidate[] = responseData.data || responseData || []; // Handle both API and direct array responses
         console.log('Fetched candidates:', data.length, 'candidates');
         
         const grouped = STAGES.reduce((acc, stage) => ({ ...acc, [stage]: [] }), {} as Record<string, Candidate[]>);
-        data.forEach(c => {
-          if (grouped[c.stage]) {
-            grouped[c.stage].push(c);
-          }
-        });
+        if (Array.isArray(data)) {
+          data.forEach(c => {
+            if (grouped[c.stage]) {
+              grouped[c.stage].push(c);
+            }
+          });
+        }
         console.log('Grouped candidates:', grouped);
         setCandidates(grouped);
       } catch (error) {

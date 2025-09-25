@@ -11,9 +11,11 @@ export function JobStats({ jobs }: JobStatsProps) {
   
   // Calculate tag distribution
   const tagCounts = jobs.reduce((acc, job) => {
-    job.tags.forEach(tag => {
-      acc[tag] = (acc[tag] || 0) + 1;
-    });
+    if (job.tags && Array.isArray(job.tags)) {
+      job.tags.forEach(tag => {
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
+    }
     return acc;
   }, {} as Record<string, number>);
   

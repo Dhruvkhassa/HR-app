@@ -35,10 +35,12 @@ export function CandidatesPage() {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch candidates');
         const data = await response.json();
-        setCandidates(data.data);
-        setPagination(data.pagination);
+        setCandidates(data.data || []);
+        setPagination(data.pagination || { total: 0, totalPages: 0, hasNext: false, hasPrev: false });
       } catch (error) {
         console.error('Error fetching candidates:', error);
+        setCandidates([]);
+        setPagination({ total: 0, totalPages: 0, hasNext: false, hasPrev: false });
       } finally {
         setLoading(false);
       }

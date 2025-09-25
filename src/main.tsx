@@ -1,10 +1,9 @@
-// src/main.tsx
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { seedDatabase } from './db/seed.ts';
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 
 // This function starts the mock service worker.
 async function enableMocking() {
@@ -25,7 +24,9 @@ enableMocking().then(async () => {
 
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </React.StrictMode>
   );
 });

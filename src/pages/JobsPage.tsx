@@ -27,7 +27,7 @@ export function JobsPage() {
     hasNext: false,
     hasPrev: false
   });
-  const { toasts, success, error, removeToast } = useToast();
+  const { toasts, success, error: showError, removeToast } = useToast();
 
   const fetchJobs = useCallback(async () => {
     const params = new URLSearchParams();
@@ -39,15 +39,20 @@ export function JobsPage() {
     const url = query ? `/jobs?${query}` : '/jobs';
     try {
       const response = await fetch(url);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch jobs: ${response.status} ${response.statusText} - ${errorText}`);
+      }
       const data = await response.json();
       setJobs(data.data);
       setPagination(data.pagination);
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
+      showError('Failed to load jobs', 'There was an error loading the jobs. Please try again.');
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, statusFilter, currentPage, pageSize]);
+  }, [searchTerm, statusFilter, currentPage, pageSize, showError]);
 
   useEffect(() => {
     fetchJobs();
@@ -90,7 +95,7 @@ export function JobsPage() {
       fetchJobs();
     } catch (err) {
       console.error('Error updating status:', err);
-      error(
+      showError(
         'Failed to update job status',
         'There was an error updating the job status. Please try again.'
       );

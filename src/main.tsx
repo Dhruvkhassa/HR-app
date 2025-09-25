@@ -8,10 +8,8 @@ import { seedDatabase } from './db/seed.ts';
 
 // This function starts the mock service worker.
 async function enableMocking() {
-  if (import.meta.env.MODE !== 'development') {
-    return;
-  }
-
+  // Enable MSW in both development and production since this is a client-side app
+  // that uses IndexedDB for data storage and doesn't have a backend API
   const { worker } = await import('./mocks/browser.ts');
 
   // `onunhandledrejection` is a good place to listen for errors from the worker.

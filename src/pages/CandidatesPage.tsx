@@ -33,7 +33,10 @@ export function CandidatesPage() {
       const url = query ? `/candidates?${query}` : '/candidates';
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Failed to fetch candidates');
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to fetch candidates: ${response.status} ${response.statusText} - ${errorText}`);
+        }
         const data = await response.json();
         setCandidates(data.data);
         setPagination(data.pagination);
